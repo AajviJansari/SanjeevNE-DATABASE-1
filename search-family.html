@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanjeevNE-DB – Family Search</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Title Banner -->
+  <header>
+    <div class="title-banner">
+      <centre>
+        <img src="images/O.drawio.png" alt="SanjeevNE-MPDB Banner" class="img-responsive">
+      </centre>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li class="dropdown">
+          <a href="#">Search ▾</a>
+          <ul class="dropdown-content">
+            <li><a href="search-family.html">Name</a></li>
+            <li><a href="search-phytochemical.html">Phytochemical</a></li>
+            <li><a href="search-family.html">Family</a></li>
+            <li><a href="search-family.html">NE-States</a></li>
+            <li><a href="search-phytochemical.html">SMILES</a></li>
+          </ul>
+        </li>
+        <li><a href="acknowledgement.html">Acknowledgement</a></li>
+        <li><a href="Tool.html">Tools</a></li>
+        <li><a href="user-manual.html">User Manual</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">&#9776;</div>
+    </nav>
+  </header>
+
+  <!-- Google Translate -->
+  <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        { pageLanguage: 'en', includedLanguages: 'en,hi,bn,as,ne,or,ta,fr,de' },
+        'google_translate_element'
+      );
+    }
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- Main Content -->
+  <main class="page">
+
+    <h2 style="text-align:center; margin-top:20px;">Plant Details</h2>
+
+    <!-- Search Box -->
+    <div style="margin-top: 20px; margin-bottom: 20px;">
+      <label for="searchFamily" style="font-size: 18px; font-weight: bold;">
+        Search Plant / Family / Phytochemical:
+      </label>
+      <input 
+        type="text" 
+        id="searchFamily" 
+        placeholder="Type to search..." 
+        style="padding: 8px; width: 280px; margin-left: 10px; border: 1px solid #aaa; border-radius: 4px;"
+      >
+    </div>
+
+    <style>
+      table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+      }
+      th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
+    </style>
+
+    <table>
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Plant</th>
+          <th>Family</th>
+          <th>Phytochemical</th>
+        </tr>
+      </thead>
+
+      <tbody id="family-body"></tbody>
+    </table>
+
+    <script>
+      // Fetch data from backend API
+      fetch("http://localhost:5980/getFamily")
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.getElementById("family-body");
+
+          data.forEach(item => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+              <td>${item.State}</td>
+              <td>${item.Plant}</td>
+              <td>${item.Family}</td>
+              <td>${item.Phytochemical}</td>
+            `;
+
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => console.error("Error loading Family Data:", err));
+
+      // Search Filter Function
+      const searchFamily = document.getElementById("searchFamily");
+
+      searchFamily.addEventListener("input", function () {
+        let filter = searchFamily.value.toLowerCase();
+        let rows = document.querySelectorAll("#family-body tr");
+
+        rows.forEach(row => {
+          let rowText = row.textContent.toLowerCase();
+          row.style.display = rowText.includes(filter) ? "" : "none";
+        });
+      });
+    </script>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Centre Of Excellence, NIPER Guwahati. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

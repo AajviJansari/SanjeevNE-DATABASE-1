@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanjeevNE-DB</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Title Banner -->
+  <header>
+    <div class="title-banner">
+      <center>
+        <img src="images/O.drawio.png" alt="SanjeevNE-MPDB Banner" class="img-responsive">
+      </center>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li class="dropdown">
+          <a href="#">Search ▾</a>
+          <ul class="dropdown-content">
+            <li><a href="search-name.html">Name</a></li>
+            <li><a href="search-phytochemical.html">Phytochemical</a></li>
+            <li><a href="search-family.html">Family</a></li>
+            <li><a href="search-ne-states.html">NE-States</a></li>
+            <li><a href="search-smiles.html">SMILES</a></li>
+          </ul>
+        </li>
+        <li><a href="acknowledgement.html">Acknowledgement</a></li>
+        <li><a href="Tool.html">Tools</a></li>
+        <li><a href="user-manual.html">User Manual</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">&#9776;</div>
+    </nav>
+  </header>
+
+  
+
+  <!-- Main Content -->
+  <main class="page">
+
+<h2><centre>Phytochemicals Details</centre> </h2>
+
+<!-- Search Box -->
+<div style="margin-top: 20px; margin-bottom: 20px;">
+  <label for="searchBox" style="font-size: 18px; font-weight: bold;">
+    Search Phytochemical:
+  </label>
+  <input 
+    type="text" 
+    id="searchBox" 
+    placeholder="Type phytochemical name..." 
+    style="padding: 8px; width: 260px; margin-left: 10px; border: 1px solid #aaa; border-radius: 4px;"
+  >
+</div>
+
+<style>
+  table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+  }
+  th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+  }
+  th {
+      background-color: #f2f2f2;
+  }
+  img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+  }
+</style>
+
+<table>
+  <thead>
+      <tr>
+          <th>Phytochemical Name</th>
+          <th>Molecular Weight</th>
+          <th>HBD</th>
+          <th>HBA</th>
+          <th>LogP</th>
+          <th>Rot. B</th>
+          <th>Electrophilicity</th>
+          <th>Chemical Structure</th>
+      </tr>
+  </thead>
+  <tbody id="gallery-body"></tbody>
+</table>
+
+<script>
+  // Fetch data from backend API
+  fetch("http://localhost:8080/images")
+      .then(res => {
+          if (!res.ok) throw new Error("Network response was not ok");
+          return res.json();
+      })
+      .then(data => {
+          const tbody = document.getElementById("gallery-body");
+
+          data.forEach(item => {
+              const tr = document.createElement("tr");
+
+              tr.innerHTML = `
+                  <td>${item.Phytochemicals}</td>
+                  <td>${item.Molecularweight}</td>
+                  <td>${item.NHD}</td>
+                  <td>${item.NHA}</td>
+                  <td>${item.LogP}</td>
+                  <td>${item.NRB}</td>
+                  <td>${item.Electrophilicity}</td>
+                  <td>
+                      <img src="http://localhost:8080/images/${item.filename}" alt="${item.Phytochemicals}">
+                  </td>
+              `;
+
+              tbody.appendChild(tr);
+          });
+      })
+      .catch(err => console.error("Error loading data:", err));
+
+  // Search Filter Function
+  const searchBox = document.getElementById("searchBox");
+
+  searchBox.addEventListener("input", function () {
+      let filterValue = searchBox.value.toLowerCase();
+      let rows = document.querySelectorAll("#gallery-body tr");
+
+      rows.forEach(row => {
+          let phytoName = row.cells[0].textContent.toLowerCase();
+
+          if (phytoName.includes(filterValue)) {
+              row.style.display = "";
+          } else {
+              row.style.display = "none";
+          }
+      });
+  });
+</script>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Centre Of Excellence, NIPER Guwahati. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
+

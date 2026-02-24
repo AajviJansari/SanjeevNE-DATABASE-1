@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanjeevNE-DB</title>
+  <link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Title Banner -->
+  <header>
+<div class="title-banner">
+  <centre>
+    <img src="images/O.drawio.png" alt="SanjeevNE-MPDB Banner" class="img-responsive">
+  </centre>
+</div></header>
+<header>
+    <nav class="navbar">
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li class="dropdown">
+          <a href="#">Search ▾</a>
+          <ul class="dropdown-content">
+           <li><a href="search-family.html">Name</a></li>
+            <li><a href="search-phytochemical.html">Phytochemical</a></li>
+            <li><a href="search-family.html">Family</a></li>
+            <li><a href="search-family.html">NE-States</a></li>
+            <li><a href="search-phytochemical.html">SMILES</a></li>
+          </ul>
+        </li>
+        <li><a href="acknowledgement.html">Acknowledgement</a></li>
+        <li><a href="Tool.html">Tools</a></li>
+        <li><a href="user-manual.html">User Manual</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">&#9776;</div>
+    </nav>
+  </header>
+
+   <!-- Google Translate -->
+<div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,bn,as,ne,or,ta,fr,de',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+  <main class="page">
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p class="subheading">For more details feel free to reach us</p>
+      <div class="contact-container">
+        <div class="contact-info">
+          <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:vaibhav@niperguwahati.in">vaibhav@niperguwahati.in</a></p>
+          <p><i class="fas fa-map-marker-alt"></i> NIPER Guwahati, Sila Katamur (Halugurisuk)<br>
+          P.O : Changsari, Dist: Kamrup,<br>
+          Assam, India, Pin: 781101</p>
+          <div class="map-container">
+            
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.645069280288!2d91.69309797424705!3d26.240719788648192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375a5015294087c9%3A0x1089352010e0c330!2sNIPER%20Guwahati!5e0!3m2!1sen!2sin!4v1756547374593!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+             
+          </div>
+        </div>
+        <div class="feedback-form">
+          <h3>Feedback form</h3>
+          <form id="feedbackForm">
+  <input type="text" name="name" placeholder="Enter your Name" required>
+  <input type="email" name="email" placeholder="Enter your valid email address" required>
+  <textarea name="message" placeholder="Please enter your comment or suggestions" rows="5" required></textarea>
+  <button type="submit" class="submit-btn">Submit</button>
+</form>
+        </div>
+      </div>
+      <script>
+document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: e.target.name.value.trim(),
+    email: e.target.email.value.trim(),
+    message: e.target.message.value.trim()
+  };
+
+  try {
+    const res = await fetch("http://localhost:5987/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const msg = await res.text();
+
+    alert(msg);
+
+    // Clear form after successful submission
+    e.target.reset();
+
+  } catch (err) {
+    alert("❌ Error: Could not send data to server");
+    console.error("Client Error:", err);
+  }
+});
+</script>
+    </section>
+  </main>
+
+    <footer>
+    <p>© 2025 Centre Of Excellence, NIPER Guwahati. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
+
