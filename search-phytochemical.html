@@ -103,14 +103,14 @@
 </table>
 
 <script>
-  // Fetch data from backend API
-  fetch("http://localhost:8080/images")
+  fetch("/images")
       .then(res => {
           if (!res.ok) throw new Error("Network response was not ok");
           return res.json();
       })
       .then(data => {
           const tbody = document.getElementById("gallery-body");
+          tbody.innerHTML = "";
 
           data.forEach(item => {
               const tr = document.createElement("tr");
@@ -124,7 +124,7 @@
                   <td>${item.NRB}</td>
                   <td>${item.Electrophilicity}</td>
                   <td>
-                      <img src="http://localhost:8080/images/${item.filename}" alt="${item.Phytochemicals}">
+                      <img src="/images/${item.filename}" alt="${item.Phytochemicals}">
                   </td>
               `;
 
@@ -133,7 +133,6 @@
       })
       .catch(err => console.error("Error loading data:", err));
 
-  // Search Filter Function
   const searchBox = document.getElementById("searchBox");
 
   searchBox.addEventListener("input", function () {
@@ -142,12 +141,7 @@
 
       rows.forEach(row => {
           let phytoName = row.cells[0].textContent.toLowerCase();
-
-          if (phytoName.includes(filterValue)) {
-              row.style.display = "";
-          } else {
-              row.style.display = "none";
-          }
+          row.style.display = phytoName.includes(filterValue) ? "" : "none";
       });
   });
 </script>
