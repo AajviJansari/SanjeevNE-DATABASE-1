@@ -214,44 +214,49 @@ const pagination = document.getElementById("pagination");
 const pageInfo = document.getElementById("pageInfo");
 
 /* ===== Fetch data ===== */
-fetch("http://localhost:8080/images")
-  .then(res => res.json())
-  .then(data => {
-    allData = data;
-    filteredData = data;
-    renderTable();
-    renderPagination();
+<script>
+  fetch("/images")
+      .then(res => {
+          if (!res.ok) throw new Error("Network response was not ok");
+          return res.json();
+      })
+      .then(data => {
+          const tbody = document.getElementById("gallery-body");
+          tbody.innerHTML = "";
+
+          data.forEach(item => {
+              const tr = document.createElement("tr");
+
+              tr.innerHTML = `
+                  <td>${item.Phytochemicals}</td>
+                  <td>${item.Molecularweight}</td>
+                  <td>${item.NHD}</td>
+                  <td>${item.NHA}</td>
+                  <td>${item.LogP}</td>
+                  <td>${item.NRB}</td>
+                  <td>${item.Electrophilicity}</td>
+                  <td>
+                      <img src="/images/${item.filename}" alt="${item.Phytochemicals}">
+                  </td>
+              `;
+
+              tbody.appendChild(tr);
+          });
+      })
+      .catch(err => console.error("Error loading data:", err));
+
+  const searchBox = document.getElementById("searchBox");
+
+  searchBox.addEventListener("input", function () {
+      let filterValue = searchBox.value.toLowerCase();
+      let rows = document.querySelectorAll("#gallery-body tr");
+
+      rows.forEach(row => {
+          let phytoName = row.cells[0].textContent.toLowerCase();
+          row.style.display = phytoName.includes(filterValue) ? "" : "none";
+      });
   });
-
-/* ===== Render table (10 rows per page) ===== */
-function renderTable() {
-  tbody.innerHTML = "";
-
-  const start = (currentPage - 1) * rowsPerPage;
-  const end = start + rowsPerPage;
-
-  filteredData.slice(start, end).forEach(item => {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>${item.Phytochemicals}</td>
-      <td>${item.Molecularweight}</td>
-      <td>${item.NHD}</td>
-      <td>${item.NHA}</td>
-      <td>${item.LogP}</td>
-      <td>${item.NRB}</td>
-      <td>${item.Electrophilicity}</td>
-      <td>
-        <a href="http://localhost:8080/images/${item.filename}" target="_blank">
-          <img src="http://localhost:8080/images/${item.filename}"
-               alt="${item.Phytochemicals}">
-        </a>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
-  });
-}
+</script>
 
 /* ===== Render pagination + page count ===== */
 function renderPagination() {
