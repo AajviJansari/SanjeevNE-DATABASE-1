@@ -284,103 +284,190 @@ header {
   margin-bottom: 15px;
 }
 
+/* ================= FEATURES SECTION ================= */
 
-
-/* Features Section */
 .Features {
-  padding: 20px 20px;
+  padding-top: clamp(40px, 6vw, 80px);   /* space below navbar */
+  padding-bottom: 30px;
   text-align: center;
 }
+
+/* Features title */
+.Features h2 {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #004d40;
+}
+
+/* Description line — FULL line visible */
+.subheading {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  max-width: 1400px;   /* 🔥 allow full sentence */
+  margin: 0 auto 50px;
+  line-height: 1.5;
+  white-space: normal; /* allow full text */
+}
+
+/* Force single line only on LARGE screens */
+@media (min-width: 1200px) {
+  .subheading {
+    white-space: nowrap;
+  }
+}
+
+/* Small screen handling */
+@media (max-width: 768px) {
+  .subheading {
+    white-space: normal;
+    padding: 0 12px;
+    font-size: 1.1rem;
+  }
+}
+/* ================= CARD CONTAINER ================= */
 
 .Features-container {
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  justify-content: center;     /* center cards horizontally */
+  align-items: stretch;
+  gap: clamp(20px, 3vw, 40px); /* responsive spacing */
   flex-wrap: wrap;
-  margin-top: 30px;
+  max-width: 1400px;
+  margin: 0 auto;              /* center container */
 }
 
-.Features-member{
+/* ================= FEATURE CARDS ================= */
+
+.Features-member {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 220px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  width: clamp(280px, 28vw, 420px); /* 🔥 grows on big screens */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .Features-member:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
 }
 
+/* Card image */
 .Features-member img {
   width: 100%;
+  max-width: 260px;
   height: auto;
-  border-radius: 50%;
-  margin-bottom: 15px;
+  margin: 0 auto 20px;
+  display: block;
 }
-/* Contact Section */
+
+/* ================= CARD TITLE ================= */
+
+.Features-member h3,
+.Features-member a {
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem); /* 🔥 BIGGER TITLES */
+  font-weight: 600;
+  color: #004d40;
+  text-decoration: none;
+}
+
+/* ================= MOBILE TWEAK ================= */
+
+@media (max-width: 768px) {
+  .Features-member {
+    width: 92%;
+    max-width: 420px;
+  }
+}
+
+/* ================= CONTACT SECTION ================= */
+
 #contact {
-  background: white;
-  padding: 20px 20px;
+  background: #ffffff;
+  padding-top: clamp(40px, 6vw, 80px);   /* responsive top spacing */
+  padding-bottom: clamp(30px, 5vw, 60px); /* prevents footer gap */
+  text-align: center;
 }
+
+/* Contact title */
 #contact h2 {
-  text-align: center;
-  margin-bottom: 10px; /* optional spacing */
+  font-size: clamp(2rem, 3.8vw, 3rem);  /* responsive title size */
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #004d40;
 }
 
-
-.subheading {
-  text-align: center;
-  margin-bottom: 30px;
+/* Contact description line */
+#contact .subheading {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  max-width: 1400px;     /* full sentence on desktop */
+  margin: 0 auto 45px;  /* space before content */
+  line-height: 1.5;
+  white-space: normal;
 }
+
+/* One-line description only on large screens */
+@media (min-width: 1200px) {
+  #contact .subheading {
+    white-space: nowrap;
+  }
+}
+
+/* ================= CONTACT CONTENT ================= */
 
 .contact-container {
   display: flex;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 50px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 20px;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 30px;
 }
 
-.contact-info {
-  flex: 1;
-  min-width: 280px;
-}
-
-.contact-info p {
-  margin: 10px 0;
-  font-size: 16px;
-}
-
+/* Left & right panels */
+.contact-info,
 .feedback-form {
-  flex: 1;
-  min-width: 280px;
+  flex: 1 1 420px;
+  min-width: 320px;
+  text-align: left;
 }
 
+/* Text sizing */
+.contact-info p {
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  margin: 10px 0;
+}
+
+/* Form heading */
 .feedback-form h3 {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
   margin-bottom: 15px;
 }
 
+/* Inputs */
 .feedback-form input,
 .feedback-form textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
 
+/* Button */
 .submit-btn {
   background: #004d40;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 28px;
+  font-size: 1rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   display: block;
-  margin: 0 auto;
+  margin: 10px auto 0;
 }
 
 .submit-btn:hover {
@@ -461,13 +548,52 @@ header {
 
 
 
-/* Footer */
+/* ===== Sticky Footer (universal fix) ===== */
 
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content expands to push footer down */
+main.page {
+  flex: 1 0 auto;
+}
+
+
+
+/* ================= LAYOUT FOR STICKY FOOTER ================= */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content grows to push footer down */
+main.page {
+  flex: 1;
+  padding-bottom: 10px;
+}
+/* ================= FOOTER (FIXED) ================= */
 
 footer {
   background: #004d40;
-  color: white;
+  color: #ffffff;
   text-align: center;
-  padding: 5px 0;
-  margin-top: 5%;      /* ensures it stays at bottom */
+  padding: 8px 0;
+  width: 100%;
+  margin-top: 0;      /* ❌ no margin */
 }
+
+
