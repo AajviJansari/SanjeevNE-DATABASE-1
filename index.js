@@ -137,7 +137,13 @@ app.get("/images", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+// Serve all static HTML, CSS, JS files
+app.use(express.static(__dirname));
 
+// Explicit homepage route
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
 // SERVER
 const PORT = process.env.PORT;
